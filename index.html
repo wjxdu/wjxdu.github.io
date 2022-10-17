@@ -155,6 +155,81 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-线代复健" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/10/17/%E7%BA%BF%E4%BB%A3%E5%A4%8D%E5%81%A5/">线性代数复健</a>
+    </h1>
+  
+
+        
+        <a href="/2022/10/17/%E7%BA%BF%E4%BB%A3%E5%A4%8D%E5%81%A5/" class="archive-article-date">
+  	<time datetime="2022-10-17T13:40:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-10-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前言：最近在学习机器学习，但是在看AE(AutoEncoder)时，感觉到了其与PCA(Principal Component Analysis)的联系，从而对SVD(Singular Value Decomposition)产生了较大的兴趣。借此机会，对之前上过的高等代数课的部分知识做一个复健整理。</p>
+<p>说到线代，我们首先能想到嘴边的概念有：向量，矩阵，秩，线性空间，线性变化，逆矩阵，单位矩阵，相似矩阵，特征值分解。核心还是矩阵，我们可以把矩阵看作一组基或者看作一个线性变换。</p>
+<h3 id="基和坐标"><a href="#基和坐标" class="headerlink" title="基和坐标"></a>基和坐标</h3><p>例如，$\mathbf{x}=\left( x_1,x_2,,x_n \right) $代表一个向量，$X=\left( \begin{matrix}<br>    x_{11}&amp;        x_{12}&amp;        x_{13}\<br>    x_{21}&amp;        x_{22}&amp;        x_{23}\<br>    x_{31}&amp;        x_{32}&amp;        x_{33}\<br>\end{matrix} \right) $代表一个矩阵，我们令$\mathbf{x}<em>1=\left( x</em>{11},x_{21},x_{31} \right) ^T<br>,<br>\mathbf{x}<em>2=\left( x</em>{12},x_{22},x_{32} \right) ^T<br>,<br>\mathbf{x}<em>3=\left( x</em>{13},x_{23},x_{33} \right) ^T$</p>
+<p>则有$X=\left( \mathbf{x}_1,\mathbf{x}_2,\mathbf{x}_3 \right) $。即矩阵的每一列代表一个基。</p>
+<p>我们常见的单位矩阵$I=\left( \begin{matrix}<br>    1&amp;        0&amp;        0\<br>    0&amp;        1&amp;        0\<br>    0&amp;        0&amp;        1\<br>\end{matrix} \right) $即是把$\mathbf{\varepsilon }_1=\left( 1,0,0 \right) ,\mathbf{\varepsilon }_2=\left( 0,1,0 \right), \mathbf{\varepsilon }_3=\left( 0,0,1 \right)<br>$当作基。</p>
+<p>当然，谈到矩阵的基，自然会回忆起线性无关，正交基，施密特正交化这一系列东西，但是这些知识还比较熟悉，不是复习的重点。给定一个向量$\alpha =\left( 1,2,3 \right) ^T$，我们可以把它看作一个向量，也可以把它看作一个坐标，即$\alpha =1\cdot \mathbf{\varepsilon }_1+2\cdot \mathbf{\varepsilon }_2+3\cdot \mathbf{\varepsilon }_3=\left( \mathbf{\varepsilon }_1,\mathbf{\varepsilon }_2,\mathbf{\varepsilon }_3 \right) \cdot \left( 1,2,3 \right) ^T=I\cdot \alpha<br>$，事实上，我们既然写成了这个样子，就潜意识地将标准基作为基底了。</p>
+<h3 id="线性变换的引出"><a href="#线性变换的引出" class="headerlink" title="线性变换的引出"></a>线性变换的引出</h3><p>另外一种看法是将矩阵看成一种线性变换，确切来说，矩阵是某个线性变换在一组基上的表示。</p>
+<p>按照课本的叙述方式：</p>
+<p>设$V$是数域$F$上一个$n$维向量空间，令$\sigma$是$V$的一个线性变换。取定$V$的一个基<br>$$<br>\mathbf{\alpha }_1,\mathbf{\alpha }_2,\cdots ,\mathbf{\alpha }_n<br>$$<br>考虑$V$中任意一个向量<br>$$<br>\xi =x_1\mathbf{\alpha }_1+x_2\mathbf{\alpha }_2+\cdots +x_n\mathbf{\alpha }_n<br>$$<br>$\sigma \left( \xi \right)$仍是$V$的一个向量。设<br>$$<br>\sigma \left( \xi \right) =y_1\mathbf{\alpha }_1+y_2\mathbf{\alpha }_2+\cdots +y_n\mathbf{\alpha }_n<br>$$<br>自然要问，如何计算$\sigma \left( \xi \right)$的坐标$\left( y_1,y_2,\cdots ,y_n \right)$。</p>
+<p>令<br>$$<br>\begin{cases}<br>    \sigma \left( \mathbf{\alpha }<em>1 \right) =a</em>{11}\mathbf{\alpha }<em>1+a</em>{21}\mathbf{\alpha }<em>2+\cdots +a</em>{n1}\mathbf{\alpha }_n\<br>    \sigma \left( \mathbf{\alpha }<em>2 \right) =a</em>{12}\mathbf{\alpha }<em>1+a</em>{22}\mathbf{\alpha }<em>2+\cdots +a</em>{n2}\mathbf{\alpha }_n\<br>    ,,                  \cdots \cdots \cdots \cdots\<br>    \sigma \left( \mathbf{\alpha }<em>n \right) =a</em>{1n}\mathbf{\alpha }<em>1+a</em>{2n}\mathbf{\alpha }<em>2+\cdots +a</em>{nn}\mathbf{\alpha }<em>n\<br>\end{cases}<br>$$<br>这里$a</em>{ij}$就是$\sigma \left( \mathbf{\alpha }_j \right) $关于基$\mathbf{\alpha }_1,\mathbf{\alpha }_2,\cdots ,\mathbf{\alpha }_n$的坐标。</p>
+<p>令<br>$$<br>A=\left( \begin{matrix}<br>    a_{11}&amp;        a_{12}&amp;        \cdots&amp;        a_{1n}\<br>    a_{21}&amp;        a_{22}&amp;        \cdots&amp;        a_{2n}\<br>    \vdots&amp;        \vdots&amp;        &amp;        \vdots\<br>    a_{n1}&amp;        a_{n2}&amp;        \cdots&amp;        a_{nn}\<br>\end{matrix} \right)<br>$$<br>$n$阶矩阵$A$叫做线性变换$\sigma$关于基$\left{ \mathbf{\alpha }_1,\mathbf{\alpha }_2,\cdots ,\mathbf{\alpha }_n \right} $的矩阵。矩阵$A$的第$j$列的元素就是$\sigma \left( \mathbf{\alpha }_j \right) $关于基$\left{ \mathbf{\alpha }_1,\mathbf{\alpha }_2,\cdots ,\mathbf{\alpha }_n \right} $的坐标。</p>
+<p>这样，取定$F$上$n$维向量空间$V$的一个基后，对于$V$的每一线性变换，有唯一确定的$F$上$n$阶矩阵与之对应。</p>
+<p>事实上：<br>$$<br>\left( \sigma \left( \mathbf{\alpha }_1 \right) ,\sigma \left( \mathbf{\alpha }_2 \right) ,\cdots ,\sigma \left( \mathbf{\alpha }_n \right) \right) =\left( \mathbf{\alpha }_1,\mathbf{\alpha }_2,\cdots ,\mathbf{\alpha }_n \right) A<br>$$<br>这意味着从基$\left{ \mathbf{\alpha }_1,\mathbf{\alpha }_2,\cdots ,\mathbf{\alpha }_n \right} $到基$\left{ \sigma \left( \mathbf{\alpha }_1 \right) ,\sigma \left( \mathbf{\alpha }_2 \right) ,\cdots ,\sigma \left( \mathbf{\alpha }_n \right) \right} $的过渡矩阵$A$即是线性变换$\sigma$关于基$\left{ \mathbf{\alpha }_1,\mathbf{\alpha }_2,\cdots ,\mathbf{\alpha }_n \right} $的矩阵。</p>
+<h3 id="从拉伸角度理解线性变换"><a href="#从拉伸角度理解线性变换" class="headerlink" title="从拉伸角度理解线性变换"></a>从拉伸角度理解线性变换</h3>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/10/17/%E7%BA%BF%E4%BB%A3%E5%A4%8D%E5%81%A5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
